@@ -67,7 +67,7 @@ def wordcloud(nouns, root, number):
     taglist = pytagcloud.make_tags(tag)
     save = root + "wordcloud" + str(number) + ".png"
     pytagcloud.create_tag_image(taglist, save,
-                                size=(900, 600), background=(234, 234, 227, 255), fontname='Korean', rectangular=False)
+                                size=(300, 200), background=(234, 234, 227, 255), fontname='Korean', rectangular=False)
 
 
 # 감정사전의 단어와 분석할 대상의 명사가 같은 것들을 뽑아 데이터프레임 생성
@@ -154,11 +154,13 @@ def raider_graph(emotion_sum, root, number):
         ax.tick_params(axis='x', which='major', pad=15)  # x축과 눈금 사이에 여백을 준다.
 
         ax.set_rlabel_position(0)  # y축 각도 설정(degree 단위)
-        plt.yticks([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30], ['0', '2', '4', '6', '8',
-                                                                                 '10', '12', '14', '16', '18', '20',
-                                                                                 '22', '24', '26', '28', '30'],
-                   fontsize=10)  # y축 눈금 설정
-        plt.ylim(0, 30)
+        index = []
+        counter = emotion_sum.sum(axis=0)
+        print("rader",emotion_sum.sum(axis=0))
+        for i in range(0,emotion_sum.sum(axis=0)):
+            index.append(i*5)
+        plt.yticks(index,fontsize=10)  # y축 눈금 설정
+        # plt.ylim(0, emotion_sum.sum(axis=0))
 
         ax.plot(angles, data, color=color, linewidth=2,
                 linestyle='solid')  # 레이더 차트 출력
